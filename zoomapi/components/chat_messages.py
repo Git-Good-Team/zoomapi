@@ -21,5 +21,8 @@ class ChatMessagesComponentV2(base.BaseComponent):
         util.require_keys(kwargs, "message_id")
         return self.put_request("/chat/users/me/messages/{}".format(kwargs.get("message_id")), data=kwargs)
 
+    def delete_message(self, **kwargs):
+        util.require_keys(kwargs, "message_id")
+        return self.delete_request("/chat/users/me/messages/{}".format(kwargs.get("message_id")), params=kwargs)
 
 
