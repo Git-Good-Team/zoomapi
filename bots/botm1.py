@@ -115,20 +115,35 @@ def send_message(client):
     message = input("Enter message: ")
     print(client.chat_messages.post(to_contact = email, message=message))
 
-def update_message(client, user_id):
-    response = input("Retrieve messages by email or channel? ")
+def update_message(client):
+    response = input("Update message by email or channel? ")
     if response == "email":
         email = input("Please enter email: ")
         print(json.loads(client.chat_messages.list(user_id = user_id, to_contact = email).content)["messages"])
         message_id = input("Enter id of message you want to change: ")
         message = input("Enter new message: ")
-        print(client.chat_messages.put(user_id = user_id, to_contact = email, message_id = message_id, message=message))
+        print(client.chat_messages.put(to_contact = email, message_id = message_id, message=message))
     elif response == "channel":
         channel = input("Please enter channel id: ")
         print(json.loads(client.chat_messages.list(user_id = user_id, to_channel = channel).content)["messages"])
         message_id = input("Enter id of message you want to change: ")
         message = input("Enter new message: ")
-        print(client.chat_messages.put(user_id = user_id, to_channel = channel, message_id = message_id, message=message))
+        print(client.chat_messages.put(to_channel = channel, message_id = message_id, message=message))
+    else:
+        print("Invalid entry")
+
+def delete_message(client):
+    response = input("Delete messages from contact email or channel? ")
+    if response == "email":
+        email = input("Please enter email: ")
+        print(json.loads(client.chat_messages.list(user_id = user_id, to_contact = email).content)["messages"])
+        message_id = input("Enter id of message you want to delete: ")
+        print(client.chat_messages.delete_message(message_id=message_id, to_contact=email))
+    elif response == "channel":
+        channel = input("Please enter channel id: ")
+        print(json.loads(client.chat_messages.list(user_id = user_id, to_channel = channel).content)["messages"])
+        message_id = input("Enter id of message you want to delete: ")
+        print(client.chat_messages.delete_message(message_id=message_id, to_channel=channel))
     else:
         print("Invalid entry")
 
@@ -181,6 +196,8 @@ while not stop:
     elif command == "send message":
         send_message(client)
     elif command == "update message":
-        update_message(client, user_id)
+        update_message(client)
+    elif command == "delete message":
+        delete_message(client)
     else:
         print("Invalid command.")
