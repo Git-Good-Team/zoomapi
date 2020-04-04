@@ -29,6 +29,10 @@ class ChatChannelsComponentV2(base.BaseComponent):
         util.require_keys(kwargs, "channel_id")
         return self.patch_request("/chat/channels/{}".format(kwargs.get("channel_id")), data=kwargs)
 
+    def join(self, **kwargs):
+        util.require_keys(kwargs, "channel_id")
+        return self.post_request("/chat/channels/{}/members/me".format(kwargs.get("channel_id")))
+
     def invite_members(self, **kwargs):
         util.require_keys(kwargs, "channel_id")
         return self.post_request("/chat/channels/{}/members".format(kwargs.get("channel_id")), data=kwargs)
@@ -41,3 +45,4 @@ class ChatChannelsComponentV2(base.BaseComponent):
     def leave_channel(self, **kwargs):
         util.require_keys(kwargs, "channel_id")
         return self.delete_request("/chat/channels/{}/members/me".format(kwargs.get("channel_id")))
+        return self.post_request("/chat/channels/{}/members".format(kwargs.get("channel_id")), data=kwargs)
