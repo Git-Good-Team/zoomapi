@@ -32,3 +32,12 @@ class ChatChannelsComponentV2(base.BaseComponent):
     def invite_members(self, **kwargs):
         util.require_keys(kwargs, "channel_id")
         return self.post_request("/chat/channels/{}/members".format(kwargs.get("channel_id")), data=kwargs)
+
+    def remove_member(self, **kwargs):
+        util.require_keys(kwargs, "channel_id")
+        util.require_keys(kwargs, "member_id")
+        return self.delete_request("/chat/channels/{}/members/{}".format(kwargs.get("channel_id"), kwargs.get("member_id")))
+
+    def leave_channel(self, **kwargs):
+        util.require_keys(kwargs, "channel_id")
+        return self.delete_request("/chat/channels/{}/members/me".format(kwargs.get("channel_id")))
