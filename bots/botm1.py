@@ -84,6 +84,13 @@ def remove_channel_member(client):
     else:
         print("Error removing member")
 
+def leave_channel(client):
+    channel_id = input("Enter channel id: ")
+    if (client.chat_channels.leave_channel(channel_id = channel_id).status_code == 204):
+        print("Left channel!")
+    else:
+        print("Error leaving channel.")
+
 def list_messages(client, user_id):
     response = input("Retrieve messages by email or channel? ")
     if response == "email":
@@ -158,6 +165,8 @@ while not stop:
         invite_channel_members(client)
     elif command == "remove channel member":
         remove_channel_member(client)
+    elif command == "leave channel":
+        leave_channel(client)
     elif command == "list messages":
         list_messages(client, user_id)
     elif command == "send message":
