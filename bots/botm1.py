@@ -99,7 +99,24 @@ def list_messages(client, user_id):
 def send_message(client):
     email = input("Please enter email of the contact you'd like to send a message: ")
     message = input("Enter message: ")
-    print(client.chat_messages.post(to_contact = email, message=message)) 
+    print(client.chat_messages.post(to_contact = email, message=message))
+
+def update_message(client, user_id):
+    response = input("Retrieve messages by email or channel? ")
+    if response == "email":
+        email = input("Please enter email: ")
+        print(json.loads(client.chat_messages.list(user_id = user_id, to_contact = email).content)["messages"])
+        message_id = input("Enter id of message you want to change: ")
+        message = input("Enter new message: ")
+        print(client.chat_messages.put(user_id = user_id, to_contact = email, message_id = message_id, message=message))
+    elif response == "channel":
+        channel = input("Please enter channel id: ")
+        print(json.loads(client.chat_messages.list(user_id = user_id, to_channel = channel).content)["messages"])
+        message_id = input("Enter id of message you want to change: ")
+        message = input("Enter new message: ")
+        print(client.chat_messages.put(user_id = user_id, to_channel = channel, message_id = message_id, message=message))
+    else:
+        print("Invalid entry")
 
 user_id = "me"
 parser = ConfigParser()
@@ -145,5 +162,7 @@ while not stop:
         list_messages(client, user_id)
     elif command == "send message":
         send_message(client)
+    elif command == "update message":
+        update_message(client, user_id)
     else:
         print("Invalid command.")      
