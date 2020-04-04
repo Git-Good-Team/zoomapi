@@ -60,6 +60,13 @@ def update_channel(client):
     else:
         print("Error updating channel")
 
+def join_channel(client):
+    channel_id = input("Enter channel id: ")
+    if (client.chat_channels.join(channel_id = channel_id).status_code == 201):
+        print("Joined channel!")
+    else:
+        print("Channel doesn't exist or already a member of the channel.")
+
 def invite_channel_members(client):
     channel_id = input("Enter channel id: ")
     number_members = 0
@@ -74,7 +81,7 @@ def invite_channel_members(client):
     if (client.chat_channels.invite_members(channel_id = channel_id, members=members).status_code == 200):
         print("Invitations sent!")
     else:
-        print("Invalid action. Check if channel exists or if users are already members of the channel.")
+        print("Invalid action. Check if channel exists, if users are already members of the channel, or if the users are allowed to join.")
     
 def remove_channel_member(client):
     channel_id = input("Enter channel id: ")
@@ -161,6 +168,8 @@ while not stop:
         delete_channel(client)
     elif command == "update channel":
         update_channel(client)
+    elif command == "join channel":
+        join_channel(client)
     elif command == "invite channel members":
         invite_channel_members(client)
     elif command == "remove channel member":
@@ -174,4 +183,4 @@ while not stop:
     elif command == "update message":
         update_message(client, user_id)
     else:
-        print("Invalid command.")      
+        print("Invalid command.")
