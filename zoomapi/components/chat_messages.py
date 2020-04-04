@@ -16,3 +16,10 @@ class ChatMessagesComponentV2(base.BaseComponent):
     def post(self, **kwargs):
         util.require_keys(kwargs, "message")
         return self.post_request("/chat/users/me/messages", data=kwargs)
+    
+    def put(self, **kwargs):
+        util.require_keys(kwargs, "message_id")
+        return self.put_request("/chat/users/me/messages/{}".format(kwargs.get("message_id")), data=kwargs)
+
+
+
