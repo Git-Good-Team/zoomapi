@@ -147,7 +147,7 @@ def delete_message(client):
     else:
         print("Invalid entry")
 
-user_id = "me"
+user_id = ""
 parser = ConfigParser()
 parser.read("bots/bot.ini")
 client_id = parser.get("OAuth", "client_id")
@@ -192,6 +192,7 @@ while not stop:
     elif command == "leave channel":
         leave_channel(client)
     elif command == "list messages":
+        user_id = input('please type "me" to view your messages: ')
         list_messages(client, user_id)
     elif command == "send message":
         send_message(client)
