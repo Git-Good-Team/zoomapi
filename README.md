@@ -1,65 +1,74 @@
-# zoomapi
+# Zoom API
 
-[https://github.com/crista/zoomapi](https://github.com/crista/zoomapi)
+Python wrapper around the [Zoom.us](http://zoom.us) REST API v2. Source code available at https://github.com/Git-Good-Team/zoomapi.
 
-Python wrapper around the [Zoom.us](http://zoom.us) REST API v2.
+This work is based on [Zoomus](https://github.com/actmd/zoomus) and [zoomapi](https://github.com/crista/zoomapi).
 
-This work is based on [Zoomus](https://github.com/actmd/zoomus), but with OAuth support.
+## Bot Commands
 
-## Compatibility
+Execute botm1.py to get started. Available commands are:
 
-Note, as this library heavily depends on the [requests](https://pypi.org/project/requests/) library, official compatibility is limited to the official compatibility of `requests`.
+### stop
 
-## Example Usage
+Exits program
 
-### Create the client 
+### create channel
 
-```python
-import json
-from zoomapi import OAuthZoomClient
+Creates a channel. User needs to provide a channel name and what type of channel is to be created.
 
-client = OAuthZoomClient('CLIENT_ID', 'CLIENT_SECRET', 'REDIRECT_URL')
+### lists channels
 
-user_response = client.user.get(id='me')
-user = json.loads(user_response.content)
-print(user)
-```
+Lists all channels the user is part of.
 
-What one will note is that the returned object from a call using the client is a [requests](https://pypi.org/project/requests/) `Response` object. This is done so that if there is any error working with the API that one has complete control of handling all errors. As such, to actually get the list of users in the example above, one will have to load the JSON from the content of the `Response` object that is returned.
+### get channel
 
-### Using with a manage context
+Retrives channel information. User must provide channel id.
 
-```python
-with JWTZoomClient('API_KEY', 'API_SECRET') as client:
-    user_list_response = client.users.list()
-    ...
-```
+### list channel members
 
-## Available methods
+List all members that belong to a specific channel. User must provide channel id.
 
-* client.user.create(...)
-* client.user.cust_create(...)
-* client.user.update(...)*
-* client.user.list(...)
-* client.user.pending(...)
-* client.user.get(...)
-* client.user.get_by_email(...)
+### delete channel
 
-* client.meeting.get(...)
-* client.meeting.end(...)
-* client.meeting.create(...)
-* client.meeting.delete(...)
-* client.meeting.list(...)
-* client.meeting.update(...)
+Deletes a specific channel. User must provide channel id.
 
-* client.report.get_account_report(...)
-* client.report.get_user_report(...)
+### update channel
 
-* client.webinar.create(...)
-* client.webinar.update(...)
-* client.webinar.delete(...)
-* client.webinar.list(...)
-* client.webinar.get(...)
-* client.webinar.end(...)
-* client.webinar.register(...)
+Updates a specific channel. User must provide channel id.
+
+### join channel
+
+Joins a specific channel. User must provide channel id.
+
+### invite channel members
+
+Invites Zoom users to a specific channel. User must provide channel id and a list of user emails.
+
+### remove channel member
+
+Removes users to a specific channel. User must provide channel id and a member id.
+
+### leave channel
+
+Active user leaves a channel that he belongs to. User must provide channel id.
+
+### list messages
+
+User lists all messages from a specific user that were sent in private messages or in a channel. User must provide user id, channel id or contact email.
+
+### send message
+
+Sends a message to a contact or channel. User must provide the message to be sent and channel id or contact email.
+
+### update message
+
+Updates an existing message. User must provide message id and contact email or channel id.
+
+### delete message
+
+Deletes an existing message. User must provide message id and contact email or channel id.
+
+### Other commands
+
+Any other command will be treated as an invalid command.
 
